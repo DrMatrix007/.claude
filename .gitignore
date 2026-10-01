@@ -1,0 +1,4 @@
+# Ignore everything by default: this folder also holds credentials, history, and session data.
+/*
+!/.gitignore
+!/agents/
