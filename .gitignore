@@ -1,4 +1,16 @@
 # Ignore everything by default: this folder also holds credentials, history, and session data.
 /*
 !/.gitignore
+!/CLAUDE.md
+!/settings.json
 !/agents/
+
+# Skills: share everything except skills/synced/, which is Anthropic's own
+# auto-synced bundled skills, not user-authored content.
+!/skills/
+/skills/synced/
+
+# Custom MCP servers: share source, not caches or runtime logs.
+!/mcp-servers/
+/mcp-servers/*/__pycache__/
+/mcp-servers/*/logs/

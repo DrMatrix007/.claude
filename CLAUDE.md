@@ -1,0 +1,1 @@
+- Always use the `coder` agent (Agent tool, subagent_type "coder") to edit code. Reading, searching and explaining code can be done directly; once a change is decided, hand it to `coder` with the file, the change, the reason, and how to verify it.
