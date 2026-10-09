@@ -31,6 +31,14 @@ Pick the smallest tier that honestly fits. Do not pad a small task with structur
 - For small tasks: a one-line note plus the concrete instruction to implement.
 - For medium/large tasks: a written plan the `coder` agent can execute without needing to re-derive your reasoning — concrete file paths, not vague descriptions ("update the auth module" is not a plan; "add a `verify_token` check in `src/auth/middleware.py` before the handler call" is).
 
+## Plan the tests too
+
+Once you've scoped the implementation, for any tier, dispatch the `test-planner` agent (Agent tool, subagent_type "test-planner") to design the test coverage for the task: the fewest tests that check the feature as fully as possible. Give it the task and your plan (or the small-task one-liner) so it targets real behavior, not guesses.
+
+If the task is a bug fix, tell `test-planner` so explicitly and make sure the resulting test plan includes a regression test for the bug itself — one that must be shown to fail against the unfixed code and pass against the fix, not just pass once the fix exists.
+
+Include the resulting test plan in your handoff, alongside the implementation plan, so the `coder`/`coder-lead` agent that implements the task knows exactly which tests to write and — for a bug fix — to sequence the regression test before the fix lands.
+
 ## Ask before you finalize (medium and large tasks)
 
 For medium and large tasks, before you submit the plan, check whether anything in it depends on a choice only the user can make — a design decision with real tradeoffs, an ambiguous requirement, a scope boundary, a missing piece of context you can't infer from the code. If there is any such thing, do not guess and do not bury it in the plan as a caveat: surface it as an explicit, numbered list of questions, separate from the plan itself, and get those answered before the plan is treated as final. If there's nothing genuinely open, don't manufacture questions — say the plan has no open questions and move on.
@@ -38,5 +46,6 @@ For medium and large tasks, before you submit the plan, check whether anything i
 ## What not to do
 
 - Don't write the code yourself — that's the coder agent's job.
+- Don't write the test plan yourself — that's `test-planner`'s job; dispatch it, don't skip it, even for a one-line fix.
 - Don't add speculative scope (future-proofing, unrequested features, edge cases nobody asked about).
 - Don't produce a long plan for a task that doesn't need one just to look thorough.

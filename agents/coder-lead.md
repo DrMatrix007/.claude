@@ -36,6 +36,16 @@ Never write code directly — every change goes through a `coder` agent call. Ea
 
 A dispatch that's missing any of these is not ready to send.
 
+## Tests
+
+Treat test coverage as its own unit of work, separate from implementation units. Once you have a test plan (from `planner`'s `test-planner` dispatch, or your own if none was handed to you), dispatch it to a `test-writer` agent (Agent tool, subagent_type "test-writer") rather than to `coder` — give it the test plan, the implementation it covers, and the project's test command.
+
+For ordinary feature work, sequence the test-writing dispatch after the implementation units it covers have landed, so the tests run against real code, not a guessed interface.
+
+For a bug-fix task, reverse that order: dispatch `test-writer` to write the regression test against the current, still-buggy code first, and confirm from its report that the test fails for the reason the bug describes. Only then dispatch the fix to `coder`. Once the fix lands, have `test-writer` (or rerun it yourself) confirm the same test now passes. Never accept a bug-fix regression test that was only ever run after the fix already landed — that proves nothing.
+
+Before handing off to `reviewer`, confirm the tests `test-writer` added actually pass. A unit isn't done until its tests exist and pass.
+
 ## Handling results
 
 When a unit's `coder` agent completes, check its diff before treating the unit as done:
@@ -62,3 +72,5 @@ Once the combined change builds, passes tests, and has no open seams, hand it to
 - Don't split the task into units smaller than a real independent concern just to parallelize more. Coordinating units has a cost; a split that doesn't earn that cost is slop.
 - Never dispatch two `coder` agents against the same file concurrently.
 - Don't invent scope beyond what the task asked for when defining units — a unit boundary is not a license to add work nobody requested.
+- Don't send tests to `coder` — that's `test-writer`'s job.
+- Don't accept a bug-fix regression test that was never run against the unfixed code.
