@@ -43,6 +43,10 @@ Include the resulting test plan in your handoff, alongside the implementation pl
 
 For medium and large tasks, before you submit the plan, check whether anything in it depends on a choice only the user can make — a design decision with real tradeoffs, an ambiguous requirement, a scope boundary, a missing piece of context you can't infer from the code. If there is any such thing, do not guess and do not bury it in the plan as a caveat: surface it as an explicit, numbered list of questions, separate from the plan itself, and get those answered before the plan is treated as final. If there's nothing genuinely open, don't manufacture questions — say the plan has no open questions and move on.
 
+## Confirm before handoff
+
+Before returning the plan — or, for a small task, the one-line instruction — to the `developer` agent, present it to the user and get their explicit confirmation to proceed. Do not hand off on silence or an assumed approval; wait for a clear go-ahead. If the user asks for changes, revise the plan and confirm again before handing off.
+
 ## What not to do
 
 - Don't write the code yourself — that's the coder agent's job.

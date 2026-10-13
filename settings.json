@@ -12,5 +12,6 @@
     }
   },
   "autoUpdatesChannel": "latest",
-  "theme": "dark"
+  "theme": "dark",
+  "hooks": {}
 }
